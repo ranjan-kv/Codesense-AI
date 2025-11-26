@@ -9,18 +9,34 @@ const app = express();
 const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:3001',
-  process.env.FRONTEND_URL // Add your Vercel URL here after deployment
+  process.env.FRONTEND_URL // Vercel URL
 ].filter(Boolean); // Remove undefined values
+
+// Also allow any Vercel preview/production URLs
+const vercelPattern = /^https:\/\/.*\.vercel\.app$/;
 
 app.use(cors({
   origin: function (origin, callback) {
     // Allow requests with no origin (mobile apps, curl, etc.)
     if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV !== 'production') {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
+    
+    // Allow if in allowedOrigins list
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      return callback(null, true);
     }
+    
+    // Allow if matches Vercel pattern
+    if (vercelPattern.test(origin)) {
+      return callback(null, true);
+    }
+    
+    // In development, allow all
+    if (process.env.NODE_ENV !== 'production') {
+      return callback(null, true);
+    }
+    
+    // Otherwise, reject
+    callback(new Error('Not allowed by CORS'));
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
