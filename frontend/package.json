@@ -38,6 +38,10 @@
     "@types/jsonwebtoken": "^9.0.5",
     "eslint": "^8.56.0",
     "eslint-config-next": "14.0.4"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
   }
 }
 

@@ -1,0 +1,4 @@
+# Ignore unnecessary files for Vercel build
+.DS_Store
+*.log
+.env.local
