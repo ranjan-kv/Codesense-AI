@@ -10,7 +10,7 @@ load_dotenv()
 
 app = FastAPI(title="CodeSense AI - AI Processing API")
 
-# CORS middleware
+# CORS middleware - Allow all Vercel URLs
 allowed_origins = [
     "http://localhost:3000",
     "http://localhost:3001",
@@ -18,9 +18,11 @@ allowed_origins = [
 ]
 allowed_origins = [origin for origin in allowed_origins if origin]  # Remove empty strings
 
+# Allow all Vercel URLs (preview and production)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=allowed_origins if os.getenv("NODE_ENV") == "production" else ["*"],
+    allow_origin_regex=r"https://.*\.vercel\.app",  # Allow all Vercel URLs
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
