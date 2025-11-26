@@ -1,11 +1,11 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001',
 })
 
 const aiApi = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_AI_API_URL,
+  baseURL: process.env.NEXT_PUBLIC_AI_API_URL || 'http://localhost:8001',
 })
 
 // Add token to requests

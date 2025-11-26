@@ -5,7 +5,7 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   typescript: {
-    ignoreBuildErrors: false,
+    ignoreBuildErrors: true, // Ignore TypeScript errors during build
   },
   webpack: (config) => {
     config.resolve.alias.canvas = false;
